@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 ARG ddclientVersion=3.8.3
 
 ENTRYPOINT ["/usr/sbin/ddclient"]
-CMD ["-file", "/etc/ddclient/ddclient.conf"]
+CMD ["-file", "/etc/ddclient/ddclient.conf", "-cache", "/var/cache/ddclient/ddclient.cache"]
 VOLUME ["/etc/ddclient"]
 
 RUN \
@@ -13,9 +13,12 @@ RUN \
       -o Dpkg::Options::='--force-confdef' \
       -o Dpkg::Options::='--force-confold' \
       install \
-      ddclient="${ddclientVersion}-*" && \
+      ca-certificates \
+      ddclient="${ddclientVersion}-*" \
+      libjson-any-perl && \
   apt-get clean && \
-  mkdir -p /etc/ddclient && \
+  update-ca-certificates && \
+  mkdir -p /etc/ddclient /var/cache/ddclient && \
   mv /etc/ddclient.conf /etc/ddclient/ && \
   addgroup \
     --gid 1000 \
@@ -26,6 +29,8 @@ RUN \
     --no-create-home \
     --uid 1000 \
     --gid 1000 \
-    ddclient
+    ddclient && \
+  chown -R 1000:1000 /etc/ddclient && \
+  chown -R 1000:1000 /var/cache/ddclient
 
 USER 1000:1000
