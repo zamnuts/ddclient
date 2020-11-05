@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 ARG ddclientVersion=3.8.3
 
 ENTRYPOINT ["/usr/sbin/ddclient"]
+CMD ["-file", "/etc/ddclient/ddclient.conf"]
 VOLUME ["/etc/ddclient"]
 
 RUN \
