@@ -1,5 +1,5 @@
-FROM ubuntu:20.04
-ARG ddclientVersion=3.8.3
+FROM ubuntu:20.10
+ARG ddclientVersion=3.9.1
 
 ENTRYPOINT ["/usr/sbin/ddclient"]
 CMD ["-file", "/etc/ddclient/ddclient.conf", "-cache", "/var/cache/ddclient/ddclient.cache"]
