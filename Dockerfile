@@ -1,4 +1,4 @@
-FROM ubuntu:20.10
+FROM ubuntu:21.10
 ARG ddclientVersion=3.9.1
 
 ENTRYPOINT ["/usr/sbin/ddclient"]
